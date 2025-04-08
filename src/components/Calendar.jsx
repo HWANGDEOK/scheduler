@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 const Calendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [daysInMonth, setDaysInMonth] = useState([]);
+  const weeks = ['일', '월', '화', '수', '목', '금', '토'];
   
   // 월에 맞는 날짜 계산
   useEffect(() => {
@@ -37,8 +38,26 @@ const Calendar = () => {
   };
   
   return (
-    <>
-    </>
+    <div>
+      <div className='calendar' style={{ textAlign: 'center'}}>
+        <button className='pre_month' onClick={() => changeMonth(-1)}>이전 달</button>
+        <span style={{fontSize: '30px'}}>{currentDate.toLocaleString('default', { month: 'long', year: 'numeric' })}</span>
+        <button className='next_month' onClick={() => changeMonth(1)}>다음 달</button>
+      </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)' }}>
+          {weeks.map(day => (
+            <div key={day} style={{ color: '#FFB1BC', padding: '50px', textAlign: 'center' }}>
+              {day}
+            </div>
+          ))}
+          {daysInMonth.map((day, index) => (
+            <div key={index} style={{ color: '#FF7C57', padding: '60px', textAlign: 'center' }}>
+              {day}
+            </div>
+          ))}
+        </div>
+      </div>
   );
 };
 
