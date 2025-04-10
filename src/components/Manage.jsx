@@ -1,8 +1,6 @@
-import { Box, useState, Modal } from "react";
+import { Box, Modal } from "react";
 
 function Manage({ open, handleClose }){
-
-
 
   return (
     <Modal open={open} onClose={handleClose}>
@@ -20,11 +18,12 @@ function Manage({ open, handleClose }){
           flexDirection: 'column',
           alignContent: 'center'
         }}
-      ></Box>
+      >
+        <h1>afdw</h1>
+      </Box>
     </Modal>
   );
 }
-
 
 
 export default Manage;
