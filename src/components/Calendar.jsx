@@ -1,4 +1,4 @@
-const Calendar = ({prevMonth, nextMonth, weeks, daysInMonth,currentDate, onModalOpen}) => {
+const Calendar = ({prevMonth, nextMonth, weeks, daysInMonth, currentDate, onModalOpen}) => {
 
   return (
     <div>
@@ -20,9 +20,9 @@ const Calendar = ({prevMonth, nextMonth, weeks, daysInMonth,currentDate, onModal
             style={{ color: '#FF7C57', width: 'auto', height: '160px', fontSize: '20px',boxSizing: 'border-box', outline: '1px solid'}}>
               <span style={{marginLeft: '10px'}}>{day}</span>
               <button onClick={onModalOpen} style={{float: 'right', fontSize:'15px', textAlign: 'center', width: '70px', height: '50px', marginRight: '10px', marginTop: '10px'}} >일정</button>
-            </div>) : (
-              <div key={index}></div>
-            )
+            </div>
+            
+          ) : (<div key={index}></div>)
           ))}
         </div>
       </div>

@@ -7,7 +7,7 @@ function App(){
   const weeks = ['일', '월', '화', '수', '목', '금', '토'];
   const [currentDate, setCurrentDate] = useState(new Date());
   const [daysInMonth, setDaysInMonth] = useState([]);
-  const [ modalOpen, setModalOpen ] = useState(false); 
+  const [ modalOpen, setModalOpen ] = useState(true); 
   
   // 월에 맞는 날짜 계산
   useEffect(() => {
@@ -51,7 +51,12 @@ function App(){
       currentDate={currentDate}
       onModalOpen={() => setModalOpen(true)}
       />
-    {/* <Manage open={modalOpen} handleClose={() => setModalOpen(false)} /> */}
+    <Manage
+      open={modalOpen}
+      handleClose={() => setModalOpen(false)}
+      currentDate={currentDate}
+      daysInMonth={daysInMonth}
+      />
     </>
   )
 }
