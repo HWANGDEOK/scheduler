@@ -8,25 +8,24 @@ function Manage({ open, handleClose, selectedDate}){
   const currentList = scheduleMap[dateKey] || [];
 
 
-
+  
   const changeTodoInput = (e) => {
     setInputValue (e.target.value);
   }
 
   const addTodo = () => {
-    if (!inputValue.trim()) return;
-    const updated = { ...scheduleMap };
-    updated[dateKey] = [...currentList, inputValue];
-    setScheduleMap(updated);
+    setInputList([...inputList, inputValue]);
     setInputValue('');
   }
 
   const deleteTodo = (index) => {
-    const updated = { ...scheduleMap };
-    updated[dateKey] = currentList.filter((_, i) => i !== index);
-    setScheduleMap(updated);
+      setInputList(inputList.filter((item, i) => {
+        return index !== i
+      }))
+    }
+  const onClickDelete = (i) => {
+    deleteTodo(i)
   }
-  
 
   return (
     open ?
@@ -42,17 +41,20 @@ function Manage({ open, handleClose, selectedDate}){
       height: '500px',
       transform: 'translate(-50%, -50%)'
       }}>
+
+      <br/>
+
       <div>
-        <span>{selectedDate?.toLocaleString('default', { month: 'long', year: 'numeric'})}</span>
-        <input value={inputValue} onChange={changeTodoInput}/>
-        <button onClick={addTodo}>추가</button>
+        <span>{currentDate.toLocaleString('default', { month: 'long', year: 'numeric'})}</span>
+        <input type="input" value={inputValue} onChange={changeTodoInput}/>
+        <button type="button" onClick={addTodo}>추가</button>
         <ul>
-        {currentList.map((item, i) => (
+        {inputList.map((item, i) => (
           <li key={i}>
-            {item}
-            <button onClick={()=>{deleteTodo(i)}}>삭제</button>
-          </li>
-          ))}
+            <span>{item}</span>
+            <button onClick={()=>{onClickDelete(i)}}>삭제</button>
+          </li>)
+        )}
         </ul> 
       </div>
 
@@ -61,8 +63,9 @@ function Manage({ open, handleClose, selectedDate}){
         top: '84%',
         right: '38%'
         }}
-        onClick={handleClose}>CLose</button>
-    </div>) : null
+        onClick={handleClose}
+      >CLose</button>
+    </div>) : ('')
   );
 }
 
