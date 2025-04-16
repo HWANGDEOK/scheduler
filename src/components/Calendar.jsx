@@ -4,10 +4,10 @@ const Calendar = ({prevMonth, nextMonth, weeks, daysInMonth, currentDate, onModa
 
   return (
     <div>
-      <div className='calendar' style={{ textAlign: 'center', display: 'flex', justifyContent: 'space-around'}}>
-        <button className='pre_month' onClick={prevMonth}><strong>이전 달</strong></button>
+      <div style={{textAlign: 'center', display: 'flex', justifyContent: 'space-around'}}>
+        <button style={{backgroundColor: 'orange'}} onClick={prevMonth}><strong>이전 달</strong></button>
         <span style={{fontSize: '40px', color: '#b38e7f'}}>{currentDate.toLocaleString('default', { month: 'long', year: 'numeric'})}</span>
-        <button className='next_month' onClick={nextMonth}><strong>다음 달</strong></button>
+        <button style={{backgroundColor: 'lightblue'}} onClick={nextMonth}><strong>다음 달</strong></button>
       </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)'}}>
@@ -21,7 +21,7 @@ const Calendar = ({prevMonth, nextMonth, weeks, daysInMonth, currentDate, onModa
             <div key={index}
             style={{ color: '#FF7C57', width: 'auto', height: '160px', fontSize: '20px',boxSizing: 'border-box', outline: '1px solid'}}>
               <span style={{marginLeft: '10px'}}>{day}</span>
-              <button onClick={() => onModalOpen(day)} style={{float: 'right', fontSize:'15px', textAlign: 'center', width: '70px', height: '50px', marginRight: '10px', marginTop: '10px'}} >일정</button>
+              <button onClick={() => onModalOpen(day)} style={{backgroundColor: 'white', float: 'right', fontSize:'15px', textAlign: 'center', width: '70px', height: '50px', marginRight: '10px', marginTop: '10px'}} >일정</button><br/>
             </div>
           ) : (<div key={index}></div>)
           ))}

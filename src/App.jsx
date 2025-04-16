@@ -10,6 +10,10 @@ function App(){
   const [ modalOpen, setModalOpen ] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
 
+  const [inputValue, setInputValue] = useState('');
+  const [scheduleMap, setScheduleMap] = useState({});
+  const currentList = scheduleMap[selectedDate] || [];
+
 
   // 월에 맞는 날짜 계산
   useEffect(() => {
@@ -65,6 +69,7 @@ function App(){
       open={modalOpen}
       handleClose={() => setModalOpen(false)}
       selectedDate={selectedDate}
+      addTodo={addTodo()}
       />
     </>
   );
