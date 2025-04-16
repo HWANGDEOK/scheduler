@@ -1,18 +1,18 @@
 import { useState } from "react";
 
-function Manage({ open, handleClose, selectedDate, addTodo}){
+function Manage({ open, handleClose, selectedDate}){
   const [inputValue, setInputValue] = useState('');
   const [scheduleMap, setScheduleMap] = useState({});
   const currentList = scheduleMap[selectedDate] || [];
 
 
-  // const addTodo = () => {
-  //   if (!inputValue.trim()) return;
-  //   const updated = { ...scheduleMap };
-  //   updated[selectedDate] = [...currentList, inputValue];
-  //   setScheduleMap(updated);
-  //   setInputValue('');
-  // }
+  const addTodo = () => {
+    if (!inputValue.trim()) return;
+    const updated = { ...scheduleMap };
+    updated[selectedDate] = [...currentList, inputValue];
+    setScheduleMap(updated);
+    setInputValue('');
+  }
 
   const deleteTodo = (index) => {
     const updated = { ...scheduleMap };

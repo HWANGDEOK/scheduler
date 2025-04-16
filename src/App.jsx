@@ -69,7 +69,6 @@ function App(){
       open={modalOpen}
       handleClose={() => setModalOpen(false)}
       selectedDate={selectedDate}
-      addTodo={addTodo()}
       />
     </>
   );
