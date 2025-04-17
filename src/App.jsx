@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import './App.css'
 import Calendar from './components/Calendar';
 import Manage from './components/manage';
 
@@ -7,12 +6,10 @@ function App(){
   const weeks = ['일', '월', '화', '수', '목', '금', '토'];
   const [currentDate, setCurrentDate] = useState(new Date());
   const [daysInMonth, setDaysInMonth] = useState([]);
-  const [ modalOpen, setModalOpen ] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
 
-  const [inputValue, setInputValue] = useState('');
   const [scheduleMap, setScheduleMap] = useState({});
-  const currentList = scheduleMap[selectedDate] || [];
 
 
   // 월에 맞는 날짜 계산
@@ -45,8 +42,24 @@ function App(){
       newDate.setMonth(prev.getMonth() + direction);
       return newDate;
     });
+  };
 
 
+  const addTodo = (date, todo) => {
+    if (!todo.trim()) return;
+    const updated = { ...scheduleMap };
+    const dateKey = date.toDateString();
+    const currentList = updated[dateKey] || [];
+    updated[dateKey] = [...currentList, todo];
+    setScheduleMap(updated);
+  };
+
+  const deleteTodo = (date, index) => {
+    const updated = { ...scheduleMap };
+    const dateKey = date.toDateString();
+    const currentList = updated[dateKey] || [];
+    updated[dateKey] = currentList.filter((_, i) => i !== index);
+    setScheduleMap(updated);
   };
 
   return(
@@ -64,11 +77,15 @@ function App(){
           setModalOpen(true);
         }
       }}
+      scheduleMap={scheduleMap}
       />
     <Manage
       open={modalOpen}
       handleClose={() => setModalOpen(false)}
       selectedDate={selectedDate}
+      addTodo={addTodo}
+      deleteTodo={deleteTodo}
+      scheduleMap={scheduleMap}
       />
     </>
   );

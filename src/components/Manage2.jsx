@@ -2,34 +2,29 @@ import { useState } from "react";
 
 function Manage({ open, handleClose, selectedDate}){
   const [inputValue, setInputValue] = useState('');
-  const [scheduleMap, setScheduleMap] = useState({}); // 날짜별로 저장할 객체
+  const [scheduleMap, setScheduleMap] = useState({});
+  const currentList = scheduleMap[selectedDate] || [];
 
-  const dateKey = selectedDate?.toDateString(); // key 예: "Mon Apr 15 2025"
-  const currentList = scheduleMap[dateKey] || [];
-
-
-  
-  const changeTodoInput = (e) => {
-    setInputValue (e.target.value);
-  }
 
   const addTodo = () => {
-    setInputList([...inputList, inputValue]);
+    if (!inputValue.trim()) return;
+    const updated = { ...scheduleMap };
+    updated[selectedDate] = [...currentList, inputValue];
+    setScheduleMap(updated);
     setInputValue('');
   }
 
   const deleteTodo = (index) => {
-      setInputList(inputList.filter((item, i) => {
-        return index !== i
-      }))
-    }
-  const onClickDelete = (i) => {
-    deleteTodo(i)
+    const updated = { ...scheduleMap };
+    updated[selectedDate] = currentList.filter((val, i) => i !== index);
+    setScheduleMap(updated);
   }
+  
 
   return (
     open ?
-    (<div 
+    (<>
+    <div 
       style={{
       position: 'absolute',
       textAlign: 'center',
@@ -41,31 +36,33 @@ function Manage({ open, handleClose, selectedDate}){
       height: '500px',
       transform: 'translate(-50%, -50%)'
       }}>
-
-      <br/>
-
       <div>
-        <span>{currentDate.toLocaleString('default', { month: 'long', year: 'numeric'})}</span>
-        <input type="input" value={inputValue} onChange={changeTodoInput}/>
-        <button type="button" onClick={addTodo}>추가</button>
-        <ul>
-        {inputList.map((item, i) => (
-          <li key={i}>
-            <span>{item}</span>
-            <button onClick={()=>{onClickDelete(i)}}>삭제</button>
-          </li>)
-        )}
-        </ul> 
+        <span style={{fontSize: '20px'}}>{selectedDate?.toLocaleString('default', { month: 'long', year: 'numeric', day: 'numeric'})}</span>
+        <br/>
+        <input value={inputValue} onChange={(e) => setInputValue(e.target.value)}/>
+        <button style={{background:'blue', color: 'white'}} onClick={addTodo}>추가</button>
+        <div>
+          <ul>
+          {currentList.map((item, i) => (
+            <li key={i}>
+              {item}
+              <button style={{background:'red', color: 'white'}} onClick={()=>{deleteTodo(i)}}>삭제</button>
+            </li>
+            ))}
+          </ul>
+        </div>
       </div>
-
-      <button style={{
+        <button style={{
         position: 'absolute',
         top: '84%',
-        right: '38%'
+        right: '38%',
+        background:'black',
+        color: 'white'
         }}
-        onClick={handleClose}
-      >CLose</button>
-    </div>) : ('')
+        onClick={handleClose}>닫기</button>
+    </div>
+    </>
+    ) : null
   );
 }
 

@@ -1,58 +1,53 @@
 import { useState } from "react";
 
-function Manage({ open, handleClose, selectedDate}){
+function Manage({ open, handleClose, selectedDate, addTodo, deleteTodo, scheduleMap }){
   const [inputValue, setInputValue] = useState('');
-  const [scheduleMap, setScheduleMap] = useState({});
-  const currentList = scheduleMap[selectedDate] || [];
+  const dateKey = selectedDate?.toDateString();
+  const currentList = scheduleMap[dateKey] || [];
 
-
-  const addTodo = () => {
-    if (!inputValue.trim()) return;
-    const updated = { ...scheduleMap };
-    updated[selectedDate] = [...currentList, inputValue];
-    setScheduleMap(updated);
-    setInputValue('');
-  }
-
-  const deleteTodo = (index) => {
-    const updated = { ...scheduleMap };
-    updated[selectedDate] = currentList.filter((val, i) => i !== index);
-    setScheduleMap(updated);
-  }
-  
 
   return (
     open ?
     (<>
     <div 
       style={{
-      position: 'absolute',
-      textAlign: 'center',
-      backgroundColor: 'white',
-      borderRadius: '5%',
-      top: '50%',
-      left: '50%',
-      width: '400px',
-      height: '500px',
-      transform: 'translate(-50%, -50%)'
+        position:'absolute',
+        textAlign: 'center',
+        backgroundColor: 'white',
+        borderRadius: '5%',
+        top: '50%',
+        left: '50%',
+        width: '400px',
+        height: '500px',
+        transform:'translate(-50%, -50%)'
       }}>
       <div>
-        <span style={{fontSize: '20px'}}>{selectedDate?.toLocaleString('default', { month: 'long', year: 'numeric', day: 'numeric'})}</span>
+        <div style={{marginTop: '8px'}}>
+          <span style={{fontSize: '20px'}}>{selectedDate?.toLocaleString('default', { month: 'long', year: 'numeric', day: 'numeric'})}</span>
+        </div>
+        
         <br/>
-        <input value={inputValue} onChange={(e) => setInputValue(e.target.value)}/>
-        <button style={{background:'blue', color: 'white'}} onClick={addTodo}>추가</button>
+        <div style={{textAlign: 'center', justifyContent: 'center'}}>
+          <input style={{left: '10%', width: '200px', height: '30px', borderRadius: '5px'}} value={inputValue} onChange={(e) => setInputValue(e.target.value)}/>
+          <button style={{marginLeft: '20px', width:'60px',height: '35px', fontSize: '12px',background:'#8ed6ee', color: 'white'}} onClick={() => {
+            addTodo(selectedDate, inputValue);
+            setInputValue('');
+          }}>추가</button>
+        </div>
+        
         <div>
           <ul>
           {currentList.map((item, i) => (
             <li key={i}>
               {item}
-              <button style={{background:'red', color: 'white'}} onClick={()=>{deleteTodo(i)}}>삭제</button>
+              <button style={{marginLeft: '20px', background:'red', color: 'white'}} onClick={()=>{deleteTodo(selectedDate, i)}}>삭제</button>
             </li>
             ))}
           </ul>
         </div>
       </div>
         <button style={{
+          
         position: 'absolute',
         top: '84%',
         right: '38%',
