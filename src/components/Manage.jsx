@@ -29,10 +29,18 @@ function Manage({ open, handleClose, selectedDate, addTodo, deleteTodo, schedule
         <br/>
         <div style={{textAlign: 'center', justifyContent: 'center'}}>
           <input style={{left: '10%', width: '200px', height: '30px', borderRadius: '5px'}} value={inputValue} onChange={(e) => setInputValue(e.target.value)}/>
-          <button style={{marginLeft: '20px', width:'60px',height: '35px', fontSize: '12px',background:'#8ed6ee', color: 'white'}} onClick={() => {
-            addTodo(selectedDate, inputValue);
-            setInputValue('');
-          }}>추가</button>
+          <button 
+            style={{
+              marginLeft: '20px',
+              width:'60px',
+              height: '35px',
+              fontSize: '12px',
+              background:'#8ed6ee',
+              color: 'white',
+            }} onClick={() => {
+              addTodo(selectedDate, inputValue);
+              setInputValue('');
+            }}>추가</button>
         </div>
         
         <div>
@@ -40,7 +48,15 @@ function Manage({ open, handleClose, selectedDate, addTodo, deleteTodo, schedule
           {currentList.map((item, i) => (
             <li key={i}>
               {item}
-              <button style={{marginLeft: '20px', background:'red', color: 'white'}} onClick={()=>{deleteTodo(selectedDate, i)}}>삭제</button>
+              <button 
+                style={{
+                  marginLeft: '20px',
+                  background:'red',
+                  color: 'white',
+                  width:'60px',
+                  height: '35px',
+                  fontSize: '12px',
+                  }} onClick={()=>{deleteTodo(selectedDate, i)}}>삭제</button>
             </li>
             ))}
           </ul>

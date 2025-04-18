@@ -60,7 +60,19 @@ const Calendar = ({prevMonth, nextMonth, weeks, daysInMonth, currentDate, onModa
               </div>
 
                 {scheduleList.map((item, idx) => (
-                <p key={idx} style={{height: '25px', lineHeight: '25px', marginTop: '2px', marginBottom: '2px', fontSize:'15px', backgroundColor: 'lightcoral'}}>{item}</p>
+                <p key={idx}
+                  style={{
+                    height: '25px',
+                    width: '97%',
+                    lineHeight: '25px',
+                    marginTop: '2px',
+                    marginBottom: '2px',
+                    fontSize:'15px',
+                    backgroundColor: '#C1FCF5',
+                    borderRadius: '5px',
+                    marginLeft: '3px',
+                    color: '#333333',
+                  }}>{item}</p>
                 ))}
             </div>
             );

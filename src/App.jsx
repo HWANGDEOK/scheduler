@@ -12,16 +12,20 @@ function App(){
   const [scheduleMap, setScheduleMap] = useState({});
 
 
-  // 월에 맞는 날짜 계산
+  useEffect(() => {
+    const storedData = localStorage.getItem("scheduleData");
+    if (storedData) {
+      setScheduleMap(JSON.parse(storedData));
+    }
+  }, []);
+
   useEffect(() => {
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth();
     
-    // 해당 월의 첫 번째 날
     const firstDay = new Date(year, month, 1);
     const firstDayOfWeek = firstDay.getDay(); // 요일 (0=일요일, 1=월요일 등)
     
-    // 해당 월의 마지막 날
     const lastDate = new Date(year, month + 1, 0);
     const daysInMonth = lastDate.getDate();
     
@@ -35,7 +39,6 @@ function App(){
     setDaysInMonth([...paddingDays, ...days]);
   }, [currentDate]);
   
-  // 달 변경
   const changeMonth = (direction) => {
     setCurrentDate(prev => {
       const newDate = new Date(prev);
@@ -52,6 +55,7 @@ function App(){
     const currentList = updated[dateKey] || [];
     updated[dateKey] = [...currentList, todo];
     setScheduleMap(updated);
+    localStorage.setItem("scheduleData", JSON.stringify(updated));
   };
 
   const deleteTodo = (date, index) => {
@@ -60,6 +64,7 @@ function App(){
     const currentList = updated[dateKey] || [];
     updated[dateKey] = currentList.filter((_, i) => i !== index);
     setScheduleMap(updated);
+    localStorage.setItem("scheduleData", JSON.stringify(updated));
   };
 
   return(
